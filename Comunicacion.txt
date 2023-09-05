@@ -1,0 +1,37 @@
+Hello / Hola
+Good morning / Buenos dias
+Good morning / Buen dia
+Good afternoon / Buenas tardes
+Good night / Buenas noches
+What is your name? (informal) / ?Como te llamo?
+What is your name? (formal) / ?Como se llamo?
+My name is / Me llamo
+My first name is / Mi nombre es
+My last name is / Mi apellido es
+I am / Soy
+And you? (informal) / ?Y tu?
+And you? (formal) / ?Y usted?
+Nice to meet you / Mucho gusto
+Likewise / Igualmente
+How are you? (informal) / ?Como estas?
+How are you? (formal) / ?Como esta?
+How is it going? / ?Que tal?
+What is happening with you? (informal) / ?Que te pasa?
+What is the matter? (formal) / ?Que le pasa?
+Very good / Muy Bien
+More or less / Mas o menos
+Very bad / Muy mal
+Thank you / Gracias
+Where are you from? (informal) / ?De donde eres?
+Where are you from? (formal) / ?De donde es?
+I am from / Soy de
+Where do you live? (informal) / ?Donde vives?
+Where do you live? (formal) / ?Donde vive?
+I live in / Vivo en
+What is his name? / ?Como se llama el?
+What is her name? / ?Como se llama ella?
+His/her name is / Se llama
+Goodbye / Adios
+See you later / Hasta luego
+See you tomorrow / Hasta manana
+See you soon / Hasta pronto

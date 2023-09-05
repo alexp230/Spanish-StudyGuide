@@ -1,0 +1,59 @@
+0 - cero
+1 - uno
+2 - dos
+3 - tres
+4 - cuatro
+5 - cinco
+6 - seis
+7 - siete
+8 - ocho
+9 - nueve
+10 - diez
+11 - once
+12 - doce
+13 - trece
+14 - catorce
+15 - quince
+16 - dieciséis
+17 - diecisiete
+18 - dieciocho
+19 - diecinueve
+20 - veinte
+21 - veintiuno
+22 - veintidós
+23 - veintitrés
+24 - veinticuatro
+25 - veinticinco
+26 - veintiséis
+27 - veintisiete
+28 - veintiocho
+29 - veintinueve
+30 - treinta
+31 - treinta y uno
+40 - cuarenta
+41 - cuarenta y uno
+50 - cincuenta
+51 - cincuenta y uno
+60 - sesenta
+61 - sesenta y uno
+70 - setenta
+71 - setenta y uno
+80 - ochenta
+81 - ochenta y uno
+90 - noventa
+91 - noventa y uno
+100 - cien
+101 - ciento uno
+200 - doscientos
+300 - trescientos
+400 - cuatrocientos
+500 - quinientos
+600 - seiscientos
+700 - setecientos
+800 - ochocientos
+900 - novecientos
+1,000 - mil
+10,000 - diez mil
+100,000 - cien mil
+1,000,000 - un millón
+10,000,000 - diez millones
