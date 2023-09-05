@@ -194,7 +194,7 @@ def Test(SpanishWords: list, EnglishWords: list, Type: int, amount_of_questions:
             answered.append(answer)
 
     # Tells the user their score 
-    print(f"\n\nYou made a {amount_correct}/{amount_of_questions} - {(round((amount_correct/amount_of_questions), 3))}%")
+    print(f"\n\nYou made a {amount_correct}/{amount_of_questions} - {'{:.2f}'.format(round((amount_correct/amount_of_questions), 2))}%")
     
     if (amount_correct == amount_of_questions):
         print("\n\nCongratulations!!! You got them all right!\n")
