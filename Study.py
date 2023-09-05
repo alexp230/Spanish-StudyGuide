@@ -116,7 +116,7 @@ def Pre_Test(SpanishWords: list, EnglishWords: list):
     Asks the user questions to make the test the way the user wants
     """
 
-    amount_of_questions = int(input(f"How many words do you want to study out of {(len(SpanishWords))} words?\n\n"))
+    amount_of_questions = int(input(f"How many words do you want to study out of {(len(SpanishWords))} words?\n"))
 
     Type = int(input("Which would you like to be questioned in?\n" \
                 "1 - English\n" \
@@ -170,8 +170,8 @@ def Test(SpanishWords: list, EnglishWords: list, Type: int, amount_of_questions:
         print(f"Starting in {i}:")
         time.sleep(1)
 
-    print(EnglishWords)
-    print(SpanishWords)
+    # print(EnglishWords)
+    # print(SpanishWords)
     print("\n\n")
 
     if (len(questions) == 0):
