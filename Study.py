@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import random
 import time
 
@@ -86,7 +88,7 @@ def Setup(category: int) -> tuple:
     fileExtension = CategoryNamesSpanish[category]
     
     # Opens the folder and gets the words from the .txt into a list and returns it
-    with open("/Users/aprui/Side_Projects/Spanish_StudyGuide/" + fileExtension + ".txt") as file:
+    with open("/Users/aprui/Side_Projects/Spanish_StudyGuide/" + fileExtension + ".txt", encoding='utf-8') as file:
         lines = file.readlines()
 
         EnglishWords = []
@@ -166,7 +168,7 @@ def Test(SpanishWords: list, EnglishWords: list, Type: int, amount_of_questions:
         questions = SpanishWords
         answers = EnglishWords
 
-    for i in range(3, -1, -1):
+    for i in range(3, 0, -1):
         print(f"Starting in {i}:")
         time.sleep(1)
 
@@ -178,6 +180,9 @@ def Test(SpanishWords: list, EnglishWords: list, Type: int, amount_of_questions:
         print("Empty list")
         print(EnglishWords)
         print(SpanishWords)
+        print(questions)
+        print(answers)
+        print(Type)
     
     else:
 
