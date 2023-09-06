@@ -1,0 +1,16 @@
+apartment - el apartamento
+avenue - la avenida
+bank - el banco
+capital - la capital
+cathedral - la catedral
+hospital - el hospital
+subway; metro - el metro
+museum - el museo
+park - el parque
+plaza - la plaza
+restaurant - el restaurante
+taxi - el taxi
+theater - el teatro
+traffic - el tráfico
+tranquility - la tranquilidad
+public transportation - el transporte público
