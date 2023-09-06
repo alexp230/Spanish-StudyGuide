@@ -9,7 +9,10 @@ CategoryNamesSpanish = (0,
                  "Los_meses_y_las_estaciones",
                  "Los_numeros_y_las_fechas", 
                  "Colores",
-                 "Verbos")
+                 "Chapter5-Cognados",
+                 "Chapter5-Communication",
+                 "Chapter5-Verbs",
+                 "Chapter5-Vocabulary")
 
 #--------------------------------------------------------------------------------
 
@@ -22,7 +25,10 @@ def Startup():
     2 - Los meses y las estaciones/The months and the seasons
     3 - Los numeros y las fechas/Numbers and dates
     4 - Colores/Colors
-    5 - Verbos
+    5 - Chapter 5 - Cognados
+    6 - Chapter 5 - Communication
+    7 - Chapter 5 - Verbs
+    8 - Chapter 5 - Vocabulary
     """
 
 
@@ -32,7 +38,11 @@ def Startup():
     2 - Los meses y las estaciones/The months and the seasons\n \
     3 - Los numeros y las fechas/Numbers and dates\n \
     4 - Colores/Colors\n \
-    5 - Verbos/Verbs")
+    5 - Chapter 5 - Cognados\n \
+    6 - Chapter 5 - Communication\n \
+    7 - Chapter 5 - Verbs\n \
+    8 - Chapter 5 - Vocabulary\n"
+          )
 
     # Gets user input and adds it to the list of categories
     category = int(input("Which categories would you like to study?\n"))
@@ -128,8 +138,14 @@ def Pre_Test(SpanishWords: list, EnglishWords: list):
     if (amount_of_questions <= 0 or amount_of_questions > len(SpanishWords)):
         amount_of_questions = random.randint(1, (len(SpanishWords)))
 
-    if (Type != 0 or Type != 1):
-        Type = random.randint(0, 1)
+    while (Type not in [1,2]):
+        print("Not a valid response: \
+              Please choose again!")
+        
+        Type = int(input("Which would you like to be questioned in?\n" \
+                "1 - English\n" \
+                "2 - Spanish\n"))
+
 
     # shuffles the two lists and choses the amount of questions the user asked for
     combined_lists = list(zip(SpanishWords, EnglishWords))
