@@ -1,60 +1,27 @@
-as afueras - outskirts/suburbs
-el almacén - department store
-el árbol - tree
-el autobús - bus
-la calle - street
-el campo - countryside/rural area
-la carnicería - butcher shop
-la carretera - highway
-el centro - downtown
-la ciudad - city
-el coche (el carro/el auto) - car
-la contaminación - pollution
-el edificio - building
-la escuela - school
-la frutería - fruit store
-la iglesia - church
-el jardín - garden
-el lugar - place
-el mercado - (outdoor) market
-el pueblo - town
-el puente - bridge
-el puesto - stand
-el rascacielos - skyscraper
-el ruido - noise
-la tienda - store
-la torre - tower
-la cuadra - block
-
-can you swap these lists
-ChatGPT
-
-Certainly, here are the Spanish nouns and their English translations, with the lists swapped:
-
-as afueras - outskirts/suburbs
-el almacén - department store
-el árbol - tree
-el autobús - bus
-la calle - street
-el campo - countryside/rural area
-la carnicería - butcher shop
-la carretera - highway
-el centro - downtown
-la ciudad - city
-el coche (el carro/el auto) - car
-la contaminación - pollution
-el edificio - building
-la escuela - school
-la frutería - fruit store
-la iglesia - church
-el jardín - garden
-el lugar - place
-el mercado - (outdoor) market
-el pueblo - town
-el puente - bridge
-el puesto - stand
-el rascacielos - skyscraper
-el ruido - noise
-la tienda - store
-la torre - tower
-la cuadra - block
+outskirts/suburbs - las afueras
+department store - el almacén
+tree - el árbol
+bus - el autobús
+street - la calle
+countryside/rural area - el campo
+butcher shop - la carnicería
+highway - la carretera
+downtown - el centro
+city - la ciudad
+car - el coche (el carro/el auto)
+pollution - la contaminación
+building - el edificio
+school - la escuela
+fruit store - la frutería
+church - la iglesia
+garden - el jardín
+place - el lugar
+(outdoor) market - el mercado
+town - el pueblo
+bridge - el puente
+stand - el puesto
+skyscraper - el rascacielos
+noise - el ruido
+store - la tienda
+tower - la torre
+block - la cuadra
