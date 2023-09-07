@@ -74,11 +74,6 @@ def Startup():
 
 def Setup(categorys: list) -> tuple:
 
-    EnglishWords = []
-    SpanishWords = []
-    Correct = []
-    Attempts = []
-
     # Builds the string for the file name depending on the folder needing to be accessed
     for category in categorys:
         fileExtension = CategoryNamesSpanish[category]
@@ -94,7 +89,7 @@ def Setup(categorys: list) -> tuple:
 
         return rows
     
-def Pre_Test(SpanishWords: list, EnglishWords: list, Correct: list):
+def Pre_Test(AllWords: tuple):
     """
     SPANISHWORDS: the Spanish words to be tested on
     ENGLISHWORDS: the English words to be tested on
@@ -102,9 +97,9 @@ def Pre_Test(SpanishWords: list, EnglishWords: list, Correct: list):
     Asks the user questions to make the test the way the user wants
     """
     
-    amount_of_questions = int(input(f"How many words do you want to study out of {(len(SpanishWords))} words?\n"))
+    amount_of_questions = int(input(f"How many words do you want to study out of {(len(AllWords))} words?\n"))
 
-    while (amount_of_questions <= 0 or amount_of_questions > len(SpanishWords)):
+    while (amount_of_questions <= 0 or amount_of_questions > len(AllWords)):
         print("Not a valid response")
         print("Please choose again!\n")
         
@@ -122,6 +117,8 @@ def Pre_Test(SpanishWords: list, EnglishWords: list, Correct: list):
         
     print("\n\n\n")
 
+    return Shuffle_Lists(AllWords, 1)
+
 
     # shuffles the two lists and choses the amount of questions the user asked for
     combined_lists = list(zip(SpanishWords, EnglishWords))
@@ -137,8 +134,34 @@ def Pre_Test(SpanishWords: list, EnglishWords: list, Correct: list):
     # Begins the test with the shuffled list
     Test(shuffled_Spanish, shuffled_English, Type, amount_of_questions)
 
-def Shuffle_Lists(CombinedLists: list, Option: int):
+def Shuffle_Lists(AllWords: list, Option: int):
 
+    EnglishWords, SpanishWords, Correct, Attempts = zip(*AllWords)
+    Correct = [int(x) for x in Correct]
+    Attempts = [int(x) for x in Attempts]
+
+    combined_lists = list(zip(EnglishWords, SpanishWords, Correct, Attempts))
+
+    if (Option == 1):
+        combined_lists = sorted(combined_lists, key=lambda x: x[3])
+    
+    elif (Option == 2):
+        combined_lists = sorted(combined_lists, key=lambda x: x[2])
+
+    elif (Option == 3):
+        combined_lists = random.shuffle(combined_lists)
+
+    # Unzip the sorted list back into separate lists
+    EnglishWords, SpanishWords, Correct, Attempts = zip(*combined_lists)
+
+    
+
+
+
+    print("EnglishWords:", EnglishWords)
+    print("SpanishWords:", SpanishWords)
+    print("Correct:", Correct)
+    print("Attempts:", Attempts)
 
     return 0
 
