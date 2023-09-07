@@ -64,124 +64,65 @@ def Startup():
 
         category = int(input())
 
-    print(Options)
-
-    # For study.py
-    # for i in range(0, (len(Options))):
-    #     Options[i] = int(Options[i])
-
     # Adds all the words from the each category into one list
-    SpanishWords = []
-    EnglishWords = []
-
-    for i in Options:
-        AllWords = Setup2(i)
-
-        EnglishWords.extend(AllWords[0])
-        SpanishWords.extend(AllWords[1])
-
-    print(EnglishWords)
-    print(SpanishWords)
+    EnglishWords, SpanishWords, Score = Setup(Options)
     
-
-
-    # for i in range(len(Options)):
-    #     AllWords = Setup(Options[i])
-
-    #     EnglishWords.extend(AllWords[0])
-    #     SpanishWords.extend(AllWords[1])
-
     # Prepares the test
-    Pre_Test(SpanishWords, EnglishWords)
+    Pre_Test(SpanishWords, EnglishWords, Score)
 
 #--------------------------------------------------------------------------------
 
-def Setup2(category: int) -> tuple:
-
-    # Builds the string for the file name depending on the folder needing to be accessed
-    fileExtension = ""
-
-    fileExtension = CategoryNamesSpanish[category]
+def Setup(categorys: list) -> tuple:
 
     EnglishWords = []
     SpanishWords = []
-
-    # Open the CSV file for reading
-    with open("/Users/aprui/Side_Projects/Spanish_StudyGuide/" + fileExtension + ".csv", encoding='utf-8') as csvfile:
-        # Create a CSV reader object
-        csvreader = csv.reader(csvfile)
-        
-        # Iterate through the rows in the CSV file
-        for row in csvreader:
-            # Each row is a list of fields
-            EnglishWords.append(row[0])
-            SpanishWords.append(row[1])
-
-    return EnglishWords, SpanishWords
-
-
-def Setup(category: int) -> tuple:
-    """
-    CATEGORY: the lesson to be learned
-
-    Given a category and a the type (language) adds all the words into a list
-
-    Returns: a tuple of all the words the category given
-    """
+    Score = []
 
     # Builds the string for the file name depending on the folder needing to be accessed
-    fileExtension = ""
+    for category in categorys:
+        fileExtension = CategoryNamesSpanish[category]
 
-    fileExtension = CategoryNamesSpanish[category]
+        # Open the CSV file for reading
+        with open("/Users/aprui/Side_Projects/Spanish_StudyGuide/" + fileExtension + ".csv", encoding='utf-8') as csvfile:
+            # Create a CSV reader object
+            csvreader = csv.reader(csvfile)
+            
+            # Iterate through the lines in the CSV file
+            for line in csvreader:
+                # Each line is a list of fields
+                EnglishWords.append(line[0])
+                SpanishWords.append(line[1])
+                Score.append(line[2])
+
+        return EnglishWords, SpanishWords, Score
     
-    # Opens the folder and gets the words from the .txt into a list and returns it
-    with open("/Users/aprui/Side_Projects/Spanish_StudyGuide/" + fileExtension + ".txt", encoding='utf-8') as file:
-        lines = file.readlines()
-
-        EnglishWords = []
-        SpanishWords = []
-
-        for line in lines:
-            word = ""
-            for character in line:
-
-                if (character == "-"):
-                    EnglishWords.append(word.strip())
-                    word = ""
-                    continue
-                
-                else:
-                    word += character
-
-            SpanishWords.append(word.strip())
-
-        return EnglishWords, SpanishWords
-    
-def Pre_Test(SpanishWords: list, EnglishWords: list):
+def Pre_Test(SpanishWords: list, EnglishWords: list, Score: list):
     """
     SPANISHWORDS: the Spanish words to be tested on
     ENGLISHWORDS: the English words to be tested on
 
     Asks the user questions to make the test the way the user wants
     """
-
+    
     amount_of_questions = int(input(f"How many words do you want to study out of {(len(SpanishWords))} words?\n"))
+
+    while (amount_of_questions <= 0 or amount_of_questions > len(SpanishWords)):
+        print("Not a valid response")
+        print("Please choose again!\n")
+        
+        amount_of_questions = int(input())
 
     Type = int(input("Which would you like to be questioned in?\n" \
                 "1 - English\n" \
                 "2 - Spanish\n"))
-    print("\n\n\n")
-
-    if (amount_of_questions <= 0 or amount_of_questions > len(SpanishWords)):
-        amount_of_questions = random.randint(1, (len(SpanishWords)))
 
     while (Type not in [1,2]):
-        print("Not a valid response: \
-              Please choose again!")
+        print("Not a valid response")
+        print("Please choose again!\n")
         
-        Type = int(input("Which would you like to be questioned in?\n" \
-                "1 - English\n" \
-                "2 - Spanish\n"))
+        Type = int(input())
+        
+    print("\n\n\n")
 
 
     # shuffles the two lists and choses the amount of questions the user asked for
@@ -252,7 +193,7 @@ def Test(SpanishWords: list, EnglishWords: list, Type: int, amount_of_questions:
             answered.append(answer)
 
     # Tells the user their score 
-    print(f"\n\nYou made a {amount_correct}/{amount_of_questions} - {'{:.2f}'.format(round((amount_correct/amount_of_questions), 2))}%")
+    print(f"\n\nYou made a {amount_correct}/{amount_of_questions} - {'{:.2f}'.format(round(((amount_correct/amount_of_questions)*100), 2))}%")
     
     if (amount_correct == amount_of_questions):
         print("\n\nCongratulations!!! You got them all right!\n")
