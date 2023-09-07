@@ -74,10 +74,14 @@ def Startup():
     SpanishWords = []
     EnglishWords = []
 
-    for i in range(len(Options)):
-        AllWords = Setup2(Options[i])
-        print (AllWords)
-    return
+    for i in Options:
+        AllWords = Setup2(i)
+
+        EnglishWords.extend(AllWords[0])
+        SpanishWords.extend(AllWords[1])
+
+    print(EnglishWords)
+    print(SpanishWords)
     
 
 
