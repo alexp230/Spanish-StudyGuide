@@ -65,10 +65,10 @@ def Startup():
         category = int(input())
 
     # Adds all the words from the each category into one list
-    EnglishWords, SpanishWords, Score = Setup(Options)
+    AllWords = Setup(Options)
     
     # Prepares the test
-    Pre_Test(SpanishWords, EnglishWords, Score)
+    Pre_Test(AllWords)
 
 #--------------------------------------------------------------------------------
 
@@ -76,7 +76,8 @@ def Setup(categorys: list) -> tuple:
 
     EnglishWords = []
     SpanishWords = []
-    Score = []
+    Correct = []
+    Attempts = []
 
     # Builds the string for the file name depending on the folder needing to be accessed
     for category in categorys:
@@ -86,17 +87,14 @@ def Setup(categorys: list) -> tuple:
         with open("/Users/aprui/Side_Projects/Spanish_StudyGuide/" + fileExtension + ".csv", encoding='utf-8') as csvfile:
             # Create a CSV reader object
             csvreader = csv.reader(csvfile)
-            
-            # Iterate through the lines in the CSV file
-            for line in csvreader:
-                # Each line is a list of fields
-                EnglishWords.append(line[0])
-                SpanishWords.append(line[1])
-                Score.append(line[2])
 
-        return EnglishWords, SpanishWords, Score
+            rows = [row for row in csvreader]
+
+            # sorted_data = sorted(rows, key=lambda x: int(x[-1]), reverse=True)
+
+        return rows
     
-def Pre_Test(SpanishWords: list, EnglishWords: list, Score: list):
+def Pre_Test(SpanishWords: list, EnglishWords: list, Correct: list):
     """
     SPANISHWORDS: the Spanish words to be tested on
     ENGLISHWORDS: the English words to be tested on
@@ -138,6 +136,11 @@ def Pre_Test(SpanishWords: list, EnglishWords: list, Score: list):
 
     # Begins the test with the shuffled list
     Test(shuffled_Spanish, shuffled_English, Type, amount_of_questions)
+
+def Shuffle_Lists(CombinedLists: list, Option: int):
+
+
+    return 0
 
 def Test(SpanishWords: list, EnglishWords: list, Type: int, amount_of_questions: int):
     """
