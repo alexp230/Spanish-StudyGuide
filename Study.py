@@ -2,6 +2,7 @@
 
 import random
 import time
+import csv
 
 # Name of the files for each folder
 CategoryNamesSpanish = (0, 
@@ -12,7 +13,8 @@ CategoryNamesSpanish = (0,
                  "Chapter5-Cognados",
                  "Chapter5-Communication",
                  "Chapter5-Verbs",
-                 "Chapter5-Vocabulary")
+                 "Chapter5-Vocabulary",
+                 "Coloress")
 
 #--------------------------------------------------------------------------------
 
@@ -41,7 +43,8 @@ def Startup():
     5 - Chapter 5 - Cognados\n \
     6 - Chapter 5 - Communication\n \
     7 - Chapter 5 - Verbs\n \
-    8 - Chapter 5 - Vocabulary\n"
+    8 - Chapter 5 - Vocabulary\n \
+    9 - Coloress\n"
           )
 
     # Gets user input and adds it to the list of categories
@@ -72,15 +75,45 @@ def Startup():
     EnglishWords = []
 
     for i in range(len(Options)):
-        AllWords = Setup(Options[i])
+        AllWords = Setup2(Options[i])
+        print (AllWords)
+    return
+    
 
-        EnglishWords.extend(AllWords[0])
-        SpanishWords.extend(AllWords[1])
+
+    # for i in range(len(Options)):
+    #     AllWords = Setup(Options[i])
+
+    #     EnglishWords.extend(AllWords[0])
+    #     SpanishWords.extend(AllWords[1])
 
     # Prepares the test
     Pre_Test(SpanishWords, EnglishWords)
 
 #--------------------------------------------------------------------------------
+
+def Setup2(category: int) -> tuple:
+
+    # Builds the string for the file name depending on the folder needing to be accessed
+    fileExtension = ""
+
+    fileExtension = CategoryNamesSpanish[category]
+
+    EnglishWords = []
+    SpanishWords = []
+
+    # Open the CSV file for reading
+    with open("/Users/aprui/Side_Projects/Spanish_StudyGuide/" + fileExtension + ".csv", encoding='utf-8') as csvfile:
+        # Create a CSV reader object
+        csvreader = csv.reader(csvfile)
+        
+        # Iterate through the rows in the CSV file
+        for row in csvreader:
+            # Each row is a list of fields
+            EnglishWords.append(row[0])
+            SpanishWords.append(row[1])
+
+    return EnglishWords, SpanishWords
 
 
 def Setup(category: int) -> tuple:
