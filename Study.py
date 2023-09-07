@@ -68,14 +68,27 @@ def Startup():
     AllWords = Setup(Options)
     
     # Prepares the test
-    Pre_Test(AllWords)
+    amount_of_questions, Type, shuffle_option = Pre_Test(AllWords)
+
+    # Shuffle the list to prepare for the test
+    EnglishWords, SpanishWords, Correct, Attempts = Shuffle_Lists(AllWords, shuffle_option)
+
+    # Begins the test with the shuffled list
+    Test(EnglishWords, SpanishWords, Type, amount_of_questions)
 
 #--------------------------------------------------------------------------------
 
-def Setup(categorys: list) -> tuple:
+def Setup(categories: list) -> tuple:
+    """
+    CATEGORIES: a list of all the categories selected by the user to be reviewed
+
+    Gets all of the rows in each of the csv files and adds them into one big list
+
+    RETURN: a list of the lists of rows
+    """
 
     # Builds the string for the file name depending on the folder needing to be accessed
-    for category in categorys:
+    for category in categories:
         fileExtension = CategoryNamesSpanish[category]
 
         # Open the CSV file for reading
@@ -91,10 +104,11 @@ def Setup(categorys: list) -> tuple:
     
 def Pre_Test(AllWords: tuple):
     """
-    SPANISHWORDS: the Spanish words to be tested on
-    ENGLISHWORDS: the English words to be tested on
+    ALLWORDS: the list of rows gather from the csv file(s)
 
-    Asks the user questions to make the test the way the user wants
+    Asks the user questions to configure te structure of the test
+
+    RETURN: a tuple of the words in an arranged order
     """
     
     amount_of_questions = int(input(f"How many words do you want to study out of {(len(AllWords))} words?\n"))
@@ -115,41 +129,34 @@ def Pre_Test(AllWords: tuple):
         
         Type = int(input())
 
-    Option = int(input("How do you want to study?\n" \
+    shuffle_options = int(input("How do you want to study?\n" \
                 "1 - Least Attempted\n" \
                 "2 - Least Scored\n" \
                 "3 - Random"))
 
-    while (Option not in [1,2,3]):
+    while (shuffle_options not in [1,2,3]):
         print("Not a valid response")
         print("Please choose again!\n")
         
-        Option = int(input())
+        shuffle_options = int(input())
         
     print("\n\n\n")
 
-    # Unzip the sorted list back into separate lists
-    EnglishWords, SpanishWords, Correct, Attempts = zip(*Shuffle_Lists(AllWords, Option))
+    return amount_of_questions, Type, shuffle_options
 
-
-
-
-    # shuffles the two lists and choses the amount of questions the user asked for
-    
-    # combined_lists = list(zip(SpanishWords, EnglishWords))
-    # random.shuffle(combined_lists)
-    # shuffled_Spanish, shuffled_English = zip(*combined_lists)
-
-    # shuffled_Spanish = list(shuffled_Spanish)
-    # shuffled_English = list(shuffled_English)
-
-    # del shuffled_Spanish[-((len(SpanishWords) - amount_of_questions)):]
-    # del shuffled_English[-((len(EnglishWords) - amount_of_questions)):]
-
-    # Begins the test with the shuffled list
-    Test(EnglishWords, SpanishWords, Type, amount_of_questions)
 
 def Shuffle_Lists(AllWords: list, Option: int):
+    """
+    ALLWORDS: list of the rows from the csv file(s)
+    OPTION: the integer value that chooses which type of shuffle occurs
+
+    Shuffles the words based off the option that is selected by the user
+    1: Sorted by least attempted
+    2: Sorted by lowest score
+    3: Randomly shuffled
+
+    RETURN: the shuffled list of rows
+    """
 
     EnglishWords, SpanishWords, Correct, Attempts = zip(*AllWords)
     Correct = [int(x) for x in Correct]
@@ -219,7 +226,7 @@ def Test(EnglishWords: list, SpanishWords: list, Type: int, amount_of_questions:
     
     else:
 
-        # Loops through the questions and accepts and compares the user aswer to the correct one
+        # Loops through the questions and accepts and compares the user answer to the correct one
         for count, question in enumerate(questions, start=1):
             answer = input(f"{count}/{amount_of_questions}) {question}\n")
 
