@@ -114,31 +114,47 @@ def Pre_Test(AllWords: tuple):
         print("Please choose again!\n")
         
         Type = int(input())
+
+    Option = int(input("How do you want to study?\n" \
+                "1 - Least Attempted\n" \
+                "2 - Least Scored\n" \
+                "3 - Random"))
+
+    while (Option not in [1,2,3]):
+        print("Not a valid response")
+        print("Please choose again!\n")
+        
+        Option = int(input())
         
     print("\n\n\n")
 
-    return Shuffle_Lists(AllWords, 1)
+    # Unzip the sorted list back into separate lists
+    EnglishWords, SpanishWords, Correct, Attempts = zip(*Shuffle_Lists(AllWords, Option))
+
+
 
 
     # shuffles the two lists and choses the amount of questions the user asked for
-    combined_lists = list(zip(SpanishWords, EnglishWords))
-    random.shuffle(combined_lists)
-    shuffled_Spanish, shuffled_English = zip(*combined_lists)
+    
+    # combined_lists = list(zip(SpanishWords, EnglishWords))
+    # random.shuffle(combined_lists)
+    # shuffled_Spanish, shuffled_English = zip(*combined_lists)
 
-    shuffled_Spanish = list(shuffled_Spanish)
-    shuffled_English = list(shuffled_English)
+    # shuffled_Spanish = list(shuffled_Spanish)
+    # shuffled_English = list(shuffled_English)
 
-    del shuffled_Spanish[-((len(SpanishWords) - amount_of_questions)):]
-    del shuffled_English[-((len(EnglishWords) - amount_of_questions)):]
+    # del shuffled_Spanish[-((len(SpanishWords) - amount_of_questions)):]
+    # del shuffled_English[-((len(EnglishWords) - amount_of_questions)):]
 
     # Begins the test with the shuffled list
-    Test(shuffled_Spanish, shuffled_English, Type, amount_of_questions)
+    Test(EnglishWords, SpanishWords, Type, amount_of_questions)
 
 def Shuffle_Lists(AllWords: list, Option: int):
 
     EnglishWords, SpanishWords, Correct, Attempts = zip(*AllWords)
     Correct = [int(x) for x in Correct]
     Attempts = [int(x) for x in Attempts]
+    
 
     combined_lists = list(zip(EnglishWords, SpanishWords, Correct, Attempts))
 
@@ -146,26 +162,23 @@ def Shuffle_Lists(AllWords: list, Option: int):
         combined_lists = sorted(combined_lists, key=lambda x: x[3])
     
     elif (Option == 2):
-        combined_lists = sorted(combined_lists, key=lambda x: x[2])
+        Percentages = [round(float(n/d), 2) if d != 0 else 0 for n,d in zip(Correct,Attempts)]
+        temp = list(zip(combined_lists,Percentages))
+
+        temp = sorted(temp, key=lambda x: x[1])
+        combined_lists = [x[0] for x in temp]
 
     elif (Option == 3):
         combined_lists = random.shuffle(combined_lists)
 
-    # Unzip the sorted list back into separate lists
-    EnglishWords, SpanishWords, Correct, Attempts = zip(*combined_lists)
+    # print("EnglishWords:", EnglishWords)
+    # print("SpanishWords:", SpanishWords)
+    # print("Correct:", Correct)
+    # print("Attempts:", Attempts)
 
-    
+    return combined_lists
 
-
-
-    print("EnglishWords:", EnglishWords)
-    print("SpanishWords:", SpanishWords)
-    print("Correct:", Correct)
-    print("Attempts:", Attempts)
-
-    return 0
-
-def Test(SpanishWords: list, EnglishWords: list, Type: int, amount_of_questions: int):
+def Test(EnglishWords: list, SpanishWords: list, Type: int, amount_of_questions: int):
     """
     SPANISHWORDS: the Spanish words to be tested on
     ENGLISHWORDS: the English words to be tested on
