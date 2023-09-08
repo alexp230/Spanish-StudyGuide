@@ -74,9 +74,9 @@ def Startup():
     EnglishWords, SpanishWords, Correct, Attempts = zip(*Shuffle_Lists(AllWords, shuffle_option))
 
     # Begins the test with the shuffled list
-    Keys, ToF, Type= Test(EnglishWords, SpanishWords, Type, amount_of_questions, FileExtension)
+    Tester, Type= Test(EnglishWords, SpanishWords, Type, amount_of_questions, FileExtension)
 
-    UpdateCSV(FileExtension, Keys, ToF, Type)
+    UpdateCSV(FileExtension, Tester, Type)
 
 #--------------------------------------------------------------------------------
 
@@ -126,7 +126,7 @@ def Pre_Test(AllWords: tuple):
                 "0 - English\n" \
                 "1 - Spanish\n"))
 
-    while (Type not in [1,2]):
+    while (Type not in [0,1]):
         print("Not a valid response")
         print("Please choose again!\n")
         
@@ -205,8 +205,7 @@ def Test(EnglishWords: list, SpanishWords: list, Type: int, amount_of_questions:
     wrong_questions = []
     amount_correct = 0
 
-    wordTOupdate = []
-    rightORwrong = []
+    Tester = {}
 
     if (Type == 0):
         questions = EnglishWords
@@ -238,14 +237,13 @@ def Test(EnglishWords: list, SpanishWords: list, Type: int, amount_of_questions:
 
             if (answer.lower().strip() == str(answers[(i)]).lower().strip()):
                 amount_correct += 1
-                rightORwrong.append(1)
+                Tester[questions[i]] = 1
             
             else:
                 wrong_questions.append(i)
-                rightORwrong.append(0)
+                Tester[questions[i]] = 0
 
             answered.append(answer)
-            wordTOupdate.append(questions[i])
 
     # Tells the user their score 
     print(f"\n\nYou made a {amount_correct}/{amount_of_questions} - {'{:.2f}'.format(round(((amount_correct/amount_of_questions)*100), 2))}%")
@@ -260,28 +258,30 @@ def Test(EnglishWords: list, SpanishWords: list, Type: int, amount_of_questions:
         for i in wrong_questions:
             print(f"{(i+1)}. {questions[i]} / {answers[i]}\n You answered {answered[i]}\n\n")
 
-    return wordTOupdate, rightORwrong, Type
+    return Tester, Type
 
-def UpdateCSV(fileExtension: str, keys: list, trueORfalse: list, Type: int):
-    with open("/Users/aprui/Side_Projects/Spanish_StudyGuide/" + fileExtension + ".csv", "r+", encoding='utf-8') as csvfile:
+def UpdateCSV(fileExtension: str, tester: dict, Type: int):
+
+    rows = []
+
+    with open("/Users/aprui/Side_Projects/Spanish_StudyGuide/" + fileExtension + ".csv", "r", encoding='utf-8') as csvfile:
         # Create a CSV reader object
         csvreader = csv.reader(csvfile)
 
         rows = list(csvreader)
 
-        # Create a CSV writer object
-        writer = csv.writer(csvfile)
+    # Iterate through the rows
+    for row in rows:
+        if (row[Type] in tester.keys()):
+            # Update the desired column (assuming you want to update the 3rd column)
+            row[3] = str(int(row[3]) + 1)
 
-        # Iterate through the rows
-        for row in rows:
-            if row[Type] in keys:
-                # Update the desired column (assuming you want to update the 3rd column)
-                row[3] = str(int(row[3]) + 1)
-                
-                # Write the modified data back to the CSV file
-                writer.writerows(row)
-                    
+            if (tester[row[Type]] == 1):
+                row[2] = str(int(row[2]) + 1)
 
+            with open("/Users/aprui/Side_Projects/Spanish_StudyGuide/" + fileExtension + ".csv", "w", newline = '') as csvfile:
+                writer = csv.writer(csvfile)
+                writer.writerows(rows)
 
 
 Startup()
