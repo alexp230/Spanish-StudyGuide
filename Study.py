@@ -255,24 +255,3 @@ def Test(EnglishWords: list, SpanishWords: list, Type: int, amount_of_questions:
 
 
 Startup()
-
-# # Open the file in read mode
-# with open("/Users/aprui/Side_Projects/Spanish_StudyGuide/EnglishWords/The_months_and_the_seasons.txt", "r") as file:
-#     # Read all lines from the file
-#     lines = file.readlines()
-
-# # Open the file in read mode
-# with open("/Users/aprui/Side_Projects/Spanish_StudyGuide/SpanishWords/Los_meses_y_las_estaciones.txt", "r") as file:
-#     # Read all lines from the file
-#     Spanishlines = file.readlines()
-
-# # Open the file in append mode
-# with open("/Users/aprui/Side_Projects/Spanish_StudyGuide/EnglishWords/The_months_and_the_seasons.txt", "a") as file:
-#     # Append each line to the file
-#     file.write("\n\n")
-#     for count, line in enumerate(lines):
-#         line = line.strip()  # Remove any trailing newline character
-#         line += " / "  # Append the desired character
-#         line += Spanishlines[count].strip()
-#         line += "\n"  # Add a newline character
-#         file.write(line)
