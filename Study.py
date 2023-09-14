@@ -14,23 +14,47 @@ CategoryNamesSpanish = (0,
                  "Chapter5-Communication",
                  "Chapter5-Verbs",
                  "Chapter5-Vocabulary",
-                 "Coloress")
+                 "Chapter6-Foods")
 
 #--------------------------------------------------------------------------------
+
+def Main():
+    
+    Options = Startup()
+
+    # Adds all the words from the each category into one list
+    AllWords, FileExtension = Setup(Options)
+    
+    # Prepares the test based on user input
+    amount_of_questions, Type, shuffle_option = Pre_Test(AllWords)
+
+    # Shuffle the list to prepare for the test
+    EnglishWords, SpanishWords, Correct, Attempts = zip(*Shuffle_Lists(AllWords, shuffle_option))
+
+    # Begins the test with the shuffled list
+    Tester, Type= Test(EnglishWords, SpanishWords, Type, amount_of_questions, FileExtension)
+
+    UpdateCSV(FileExtension, Tester, Type)
+
+#--------------------------------------------------------------------------------
+
 
 def Startup():
     """
     User choses the categoies of words they want to study
 
-    0 - Close
-    1 - Comunicacion/Communication
-    2 - Los meses y las estaciones/The months and the seasons
-    3 - Los numeros y las fechas/Numbers and dates
-    4 - Colores/Colors
-    5 - Chapter 5 - Cognados
-    6 - Chapter 5 - Communication
-    7 - Chapter 5 - Verbs
-    8 - Chapter 5 - Vocabulary
+    0 - Close |
+    1 - Comunicacion/Communication |
+    2 - Los meses y las estaciones/The months and the seasons |
+    3 - Los numeros y las fechas/Numbers and dates |
+    4 - Colores/Colors |
+    5 - Chapter 5 - Cognados |
+    6 - Chapter 5 - Communication |
+    7 - Chapter 5 - Verbs |
+    8 - Chapter 5 - Vocabulary |
+    9 - Chapter 6 - Foods
+
+    RETURN: the categories, in a list, the user wants to study
     """
 
 
@@ -44,7 +68,7 @@ def Startup():
     6 - Chapter 5 - Communication\n \
     7 - Chapter 5 - Verbs\n \
     8 - Chapter 5 - Vocabulary\n \
-    9 - Coloress\n"
+    9 - Chapter 6 - Foods\n"
           )
 
     # Gets user input and adds it to the list of categories
@@ -63,20 +87,8 @@ def Startup():
             Options.append(category)
 
         category = int(input())
-
-    # Adds all the words from the each category into one list
-    AllWords, FileExtension = Setup(Options)
     
-    # Prepares the test
-    amount_of_questions, Type, shuffle_option = Pre_Test(AllWords)
-
-    # Shuffle the list to prepare for the test
-    EnglishWords, SpanishWords, Correct, Attempts = zip(*Shuffle_Lists(AllWords, shuffle_option))
-
-    # Begins the test with the shuffled list
-    Tester, Type= Test(EnglishWords, SpanishWords, Type, amount_of_questions, FileExtension)
-
-    UpdateCSV(FileExtension, Tester, Type)
+    return Options
 
 #--------------------------------------------------------------------------------
 
@@ -101,8 +113,6 @@ def Setup(categories: list) -> tuple:
 
             rows = list(csvreader)
 
-            # sorted_data = sorted(rows, key=lambda x: int(x[-1]), reverse=True)
-
         return rows, fileExtension
     
 def Pre_Test(AllWords: tuple):
@@ -113,7 +123,7 @@ def Pre_Test(AllWords: tuple):
 
     RETURN: a tuple of the words in an arranged order
     """
-    
+    # Gets the amount of question user wants to be tested on
     amount_of_questions = int(input(f"How many words do you want to study out of {(len(AllWords))} words?\n"))
 
     while (amount_of_questions <= 0 or amount_of_questions > len(AllWords)):
@@ -122,6 +132,7 @@ def Pre_Test(AllWords: tuple):
         
         amount_of_questions = int(input())
 
+    # Determines what language the user will be tested in
     Type = int(input("Which would you like to be questioned in?\n" \
                 "0 - English\n" \
                 "1 - Spanish\n"))
@@ -132,6 +143,7 @@ def Pre_Test(AllWords: tuple):
         
         Type = int(input())
 
+    # Determines how the list will be shuffled which determines what words the user will be tested on
     shuffle_options = int(input("How do you want to study?\n" \
                 "1 - Least Attempted\n" \
                 "2 - Least Scored\n" \
@@ -161,17 +173,19 @@ def Shuffle_Lists(AllWords: list, Option: int):
     RETURN: the shuffled list of rows
     """
 
+    # Separate the list of lists into individual lists to turns two of the lists of strings into numbers
     EnglishWords, SpanishWords, Correct, Attempts = zip(*AllWords)
     Correct = [int(x) for x in Correct]
     Attempts = [int(x) for x in Attempts]
     
-
+    # Combines the lists back into one big list
     combined_lists = list(zip(EnglishWords, SpanishWords, Correct, Attempts))
-    print(combined_lists)
 
+    # Sort by least attempted
     if (Option == 1):
         combined_lists = sorted(combined_lists, key=lambda x: x[3])
     
+    # Sort by lowest score
     elif (Option == 2):
         Percentages = [round(float(n/d), 2) if d != 0 else 0 for n,d in zip(Correct,Attempts)]
         temp = list(zip(combined_lists,Percentages))
@@ -179,14 +193,9 @@ def Shuffle_Lists(AllWords: list, Option: int):
         temp = sorted(temp, key=lambda x: x[1])
         combined_lists = [x[0] for x in temp]
 
+    # Randomly sorts list
     elif (Option == 3):
         random.shuffle(combined_lists)
-
-    # print("EnglishWords:", EnglishWords)
-    # print("SpanishWords:", SpanishWords)
-    # print("Correct:", Correct)
-    # print("Attempts:", Attempts)
-    print(combined_lists)
 
     return combined_lists
 
@@ -194,13 +203,14 @@ def Test(EnglishWords: list, SpanishWords: list, Type: int, amount_of_questions:
     """
     SPANISHWORDS: the Spanish words to be tested on
     ENGLISHWORDS: the English words to be tested on
-    TYPE: determins what language the questions are in
+    TYPE: determines what language the questions are in
     AMOUNT_OF_QUESTIONS: the amount of the questions the user is going to answer
 
     """
 
     questions = []
     answers = []
+
     answered = []
     wrong_questions = []
     amount_correct = 0
@@ -214,6 +224,8 @@ def Test(EnglishWords: list, SpanishWords: list, Type: int, amount_of_questions:
     elif (Type == 1):
         questions = SpanishWords
         answers = EnglishWords
+
+    print("\n")
 
     for i in range(3, 0, -1):
         print(f"Starting in {i}:")
@@ -261,6 +273,11 @@ def Test(EnglishWords: list, SpanishWords: list, Type: int, amount_of_questions:
     return Tester, Type
 
 def UpdateCSV(fileExtension: str, tester: dict, Type: int):
+    """
+    FILEEXTENSION: the name of the file path within the folder
+    TESTER: dictionary that keeps track of the words answered and whether or not the user got them right
+    TYPE: determines which word to check (English or Spanish) when making comparison
+    """
 
     rows = []
 
@@ -270,10 +287,10 @@ def UpdateCSV(fileExtension: str, tester: dict, Type: int):
 
         rows = list(csvreader)
 
-    # Iterate through the rows
+    # Iterate through the rows and updates the attempted and correct column of each word
     for row in rows:
         if (row[Type] in tester.keys()):
-            # Update the desired column (assuming you want to update the 3rd column)
+
             row[3] = str(int(row[3]) + 1)
 
             if (tester[row[Type]] == 1):
@@ -283,5 +300,7 @@ def UpdateCSV(fileExtension: str, tester: dict, Type: int):
                 writer = csv.writer(csvfile)
                 writer.writerows(rows)
 
+    return 0
 
-Startup()
+
+Main()
